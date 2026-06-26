@@ -24,7 +24,7 @@ interface ApiError { success: false; error: string; message: string; }
 type ApiResponse = ApiSuccess | ApiError;
 
 // ─── Konstanten ──────────────────────────────────────────────────────────────
-const ALLOWED  = ['image/jpeg','image/png','image/webp'];
+const VALID_EXTENSIONS = ['jpg','jpeg','png','webp'];
 const MAX_MB   = 10;
 const DIFF_COLORS: Record<string, string> = { easy:'var(--accent)', medium:'#FFB347', hard:'var(--secondary)' };
 const DIFF_LABELS: Record<string, string> = { easy:'Einfach', medium:'Mittel', hard:'Schwer' };
@@ -68,7 +68,13 @@ export default function HomeworkUpload() {
   const pickFile = useCallback((f?: File | null) => {
     setError(''); setResult(null);
     if (!f) return;
-    if (!ALLOWED.includes(f.type)) { setError('Format nicht erlaubt. Bitte JPG, PNG oder WebP hochladen.'); return; }
+    const ext = f.name.split('.').pop()?.toLowerCase() ?? '';
+    const validType = f.type.startsWith('image/');
+    const validExt  = VALID_EXTENSIONS.includes(ext);
+    if (!validType && !validExt) {
+      setError('Format nicht erlaubt. Bitte JPG, PNG oder WebP hochladen.');
+      return;
+    }
     if (f.size > MAX_MB * 1024 * 1024) { setError(`Datei zu groß (${(f.size/1024/1024).toFixed(1)} MB). Max ${MAX_MB} MB.`); return; }
     setFile(f); setPreview(URL.createObjectURL(f));
   }, []);
@@ -205,7 +211,7 @@ export default function HomeworkUpload() {
         )}
       </div>
 
-      <input ref={fileRef} type="file" accept="image/jpeg,image/png,image/webp"
+      <input ref={fileRef} type="file" accept="image/*"
         style={{ display:'none' }} onChange={e => pickFile(e.target.files?.[0])}/>
 
       {error && <ErrorBox msg={error}/>}
