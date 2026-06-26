@@ -40,7 +40,7 @@ interface ApiError {
 type ApiResponse = ApiSuccess | ApiError;
 
 // ─── Konstanten ──────────────────────────────────────────────────────────────
-const API_BASE   = 'https://lernheld3-1.onrender.com';
+const API_BASE   = 'https://lernhelden3-1.onrender.com';
 const MAX_MB     = 10;
 const DIFF_COLORS: Record<string, string> = {
   easy: 'var(--accent)', medium: '#FFB347', hard: 'var(--secondary)',
