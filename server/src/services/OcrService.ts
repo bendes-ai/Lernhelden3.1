@@ -34,14 +34,18 @@ function clean(raw: string): string {
 }
 
 async function ocr(filePath: string): Promise<{ text: string; confidence: number; lang: string }> {
-  const worker = await Tesseract.createWorker(config.ocrLangs, 1, {
-    logger: config.isDev
-      ? (m: { status: string; progress: number }) => {
-          if (m.status === 'recognizing text')
-            process.stdout.write(`\r[OCR] ${Math.round(m.progress * 100)}%  `);
-        }
-      : undefined,
-  });
+// ✅ Fix – Objekt nur mit logger bauen wenn isDev
+const workerOptions = config.isDev
+  ? {
+      logger: (m: { status: string; progress: number }) => {
+        if (m.status === 'recognizing text')
+          process.stdout.write(`\r[OCR] ${Math.round(m.progress * 100)}%  `);
+      },
+    }
+  : {};
+
+const worker = await Tesseract.createWorker(config.ocrLangs, 1, workerOptions);
+
   const { data } = await worker.recognize(filePath);
   await worker.terminate();
   if (config.isDev) process.stdout.write('\n');
