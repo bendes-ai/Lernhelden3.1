@@ -35,11 +35,13 @@ jobs:
       - name: Build Node assets
         env:
           CI: true
-          SITE_URL: ${{ inputs.site-url }}
+          DEPLOYMENT_FOLDER: client/dist
+          SITE_URL: ${{ env.IONOS_APP_URL }}
         run: |
-          cd client && npm install
-          cd client && npm run build
-
+          cd client
+          npm install
+          npm run build
+          
 # Please do not touch the following action
       - name: Store deployment content
         uses: ionos-deploy-now/artifact-action@v1
