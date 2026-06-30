@@ -1,21 +1,25 @@
 import React from 'react';
-import { Routes, Route } from 'react-router-dom';
-import Header from './components/layout/Header';
-import Footer from './components/layout/Footer';
-import Startseite from './pages/Startseite';
-import Lerntechniken from './pages/Lerntechniken';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import Layout from './components/Layout.jsx';
+
+import Startseite from './pages/Startseite.jsx';
+import Lerntechniken from './pages/Lerntechniken.jsx';
+import LernApp from './pages/LernApp.jsx';
+import KiSicher from './pages/KiSicher.jsx';
+import FuerEltern from './pages/FuerEltern.jsx';
 
 export default function App() {
   return (
-    <div className="app">
-      <Header />
-      <main>
-        <Routes>
-          <Route path="/" element={<Startseite />} />
-          <Route path="/lerntechniken" element={<Lerntechniken />} />
-        </Routes>
-      </main>
-      <Footer />
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Layout />}>
+          <Route index element={<Startseite />} />
+          <Route path="lerntechniken" element={<Lerntechniken />} />
+          <Route path="lern-app" element={<LernApp />} />
+          <Route path="ki-sicher" element={<KiSicher />} />
+          <Route path="fuer-eltern" element={<FuerEltern />} />
+        </Route>
+      </Routes>
+    </BrowserRouter>
   );
 }
