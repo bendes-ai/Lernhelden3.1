@@ -51,7 +51,7 @@ const TECHNIKEN = [
   },
   {
     id: 'mindmaps',
-    titel: 'Mind Maps',
+    titel: 'Mindmaps',
     icon: '🕸️',
     tags: ['visualisieren', 'strukturieren', 'verknuepfen'],
     kategorien: ['texte', 'referate', 'prozesse'],
