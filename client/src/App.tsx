@@ -1,7 +1,6 @@
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 import Layout from './components/Layout.jsx';
-
 import Startseite from './pages/Startseite.jsx';
 import Lerntechniken from './pages/Lerntechniken.jsx';
 import LernApp from './pages/LernApp.jsx';
